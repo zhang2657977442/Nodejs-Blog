@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>注册</title>  
+    <link rel="stylesheet" href="stylesheets/style.css">
+  </head>
+  <body>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="main">
+    <div class="form-box">
+      <h2>注册</h2>
+        <form action="/users/regist" method="POST">
+            <input type="text" id="username" value="" placeholder="请输入用户名">
+            <input type="password" id="password" value="" placeholder="请输入密码">
+            <input type="password" id="password2" value="" placeholder="请确认密码">
+            <input type="button" id="regist" value="注册">
+        </form>
+        <div>已有帐号， <a href="/login">立即登录</a></div>
+        <h3 class="notice">两次密码不一致</h3>
+    </div>
+    </div>
+    <script src="js/jquery-3.5.1.min.js"></script>
+
+
+    <script>
+      $('#regist').click(function () {
+        if($("#password").val()==$("#password2").val()){
+          $.post("/users/regist",{
+            "username":$("#username").val(),
+            "password":$("#password").val(),
+            "password2":$("#password2").val()
+        },function (result) {
+          console.log(result);
+            if(result == "1"){
+              alert("注册成功");
+                window.location.href = "/login";
+            }else if(result == "0"){
+                alert("用户名已经存在");
+            }
+            else if(result == "-1"){
+                alert("注册失败");
+            }
+        });   
+        }
+        else {
+          $('.notice').css("display","block");
+        }
+       
+    });
+  </script>
+  </body>
+</html>

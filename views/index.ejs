@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Direction的博客</title>
+    <link rel="stylesheet" href="stylesheets/bootstrap.css">
+    <link rel="stylesheet" href="stylesheets/index.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">OneDirection</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">前端技术<span class="sr-only">(current)</span></a></li>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">分类<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/article/classfiyPage?classify=基础三大件">基础三大件</a></li>
+                            <li><a href="/article/classfiyPage?classify=VueJS">VueJS</a></li>
+                            <li><a href="/article/classfiyPage?classify=NodeJS">NodeJS</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/article/classfiyPage?classify=服务端">服务端</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/article/classfiyPage?classify=其他">其他</a></li>
+                        </ul>
+                    </li>
+					<li><a href="https://www.frontendjs.com" target="_blank">技术文档</a></li>
+                    <li><a href="https://github.com/zhang2657977442"  target="_blank">开源项目</a></li>
+                    <li><a href="javascript:alert('QQ:2657977449');">联系</a></li>
+
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="banner clearfix">
+        <div class="jumbotron">
+            <p>One Direction</p>
+            <h1>个人博客</h1>
+			<h3>一路向前!</h3>
+			<img  src="img/h5.png" alt="">
+			<img  src="img/js.png" alt="">
+			<img  src="img/c3.png" alt="">
+        </div>
+	
+     
+    
+       
+        <img class="fix top" src="img/top.png" alt="">
+    </div>
+    <div class="row">
+		<div class="getAllArticle">
+
+		</div>
+		<div class="col-sm-12">
+			<nav>
+				<ul class="pagination">
+				</ul>
+			</nav>
+		</div>
+    </div>
+	<div class="footer">  
+        <strong>Copyright</strong> &copy; 2021 All rights reserved <img src="img/beian.png" alt=""><a href="http://beian.miit.gov.cn/">京ICP备2021019448号</a>
+    
+    </div>
+
+	<script src="js/jquery-3.5.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+	<script src="js/underscore-noflect.js"></script>
+	
+	<script type="text/template" id="allArticle">
+        <div class="col-md-4"><a href="/article/showArticle?ID={{= ID }}">{{= imgstr}}<span>{{= topic }}</span></a>
+			<h6 class="post-footer">
+                {{= classify }} <!--| 评论：未开放--> | 浏览：{{= visitNum }} | 点赞：{{= thumbsUp }} 
+            </h6></div>
+	</script>
+    <script type="text/template" id="allArticle1">
+        <div class="col-md-4"><a href="/article/showArticle?ID={{= ID }}"><img src="img/title.jpg" alt=""><span>{{= topic }}</span></a>
+			<h6 class="post-footer">
+                {{= classify }} <!--| 评论：未开放--> | 浏览：{{= visitNum }} | 点赞：{{= thumbsUp }} 
+            </h6></div>
+	</script>
+    <!-- <div class="footer"></div> -->
+
+    <script>
+        $(".navbar").fadeIn(900);
+        $(".banner").fadeIn(900);
+
+        $(window).scroll(function () {
+            if ($(document).scrollTop() >= 200) {
+                //$(".col-md-4").fadeIn(900);
+				//$(".col-sm-12").fadeIn(900);
+                $(".bottom").fadeOut(300);
+                $(".top").fadeIn(1000);
+            }
+            if ($(document).scrollTop() == 0) {
+                $(".bottom").fadeIn(1000);
+                $(".top").fadeOut(300);
+            }
+        });
+        $(".top").click(function () {
+            $("html,body").animate({ scrollTop: '0px' }, 800);
+        });
+        $(".bottom").click(function () {
+            $("html,body").animate({ scrollTop: '740px' }, 800);
+        });
+//获取文章
+var getAllArticle = $('.getAllArticle');
+    //得到模板
+    var compiled = _.template($("#allArticle").html());
+    var compiled1 = _.template($("#allArticle1").html());
+    getPage(0);
+    //AJAX读取文章列表
+    function getPage(page) {
+		$('.getAllArticle').empty();
+        $.post("/article/getArticle?page="+page,function (result) {
+            for(var i = 0; i<result.allResult.length; i++){
+                if(result.allResult[i].imgstr){
+                var htmlstring = compiled(result.allResult[i]);     
+                getAllArticle.append(htmlstring);
+            }else{
+                var htmlstring = compiled1(result.allResult[i]);     
+                getAllArticle.append(htmlstring);
+            }
+            }
+        });
+    }
+
+  //分页
+  $.post("/article/getAllAmount", function (result) {
+        var amount = parseInt(result);
+        pagement = Math.ceil(amount / 9);
+        for(var i = 1; i <pagement+1;i++){
+            $(".pagination").append("<li><a href='javascript:;'>" + i +"</a></li>");
+        }
+        $(".pagination li:first").addClass("active");
+        $(".pagination li").click(function () {
+            var page = $(this).index();
+            $('#getAllArticle').html("");
+            getPage(page);
+            $(this).addClass("active").siblings().removeClass("active");
+        });
+    });
+</script>
+
+</body>
+
+</html>

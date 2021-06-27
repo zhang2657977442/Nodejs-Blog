@@ -1,0 +1,125 @@
+.banner {
+   position: relative;
+   display: none;
+   background: #43C6AC;  /* fallback for old browsers */
+   background: -webkit-linear-gradient(to left, #F8FFAE, #43C6AC);  /* Chrome 10-25, Safari 5.1-6 */
+   background: linear-gradient(to left, #F8FFAE, #43C6AC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+   
+   
+
+   
+   
+   
+   height: 700px;
+}
+
+
+.banner .global {
+    float: right;
+    margin-right: 3%;
+}
+
+.banner .man{
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    max-width: 60%;
+    height: auto;
+    
+}
+.banner .fix {
+    position: fixed;
+    bottom: 4%;
+    right: 0;
+    z-index: 9;
+}
+
+.banner .top {
+    display: none;
+}
+
+.clearfix::after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+  
+.banner p {
+	font-family: "Dosis", "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 500;
+    margin: 0 0 10px;
+	color: #273849;
+}
+
+.col-md-4 img {
+	margin: 6% auto 3% auto;
+}
+
+
+.col-md-4 span{
+    display: block;
+    font-size: 22px;
+    font-weight: 700;
+    color: #333;
+    }
+
+@media (min-width: 992px){
+.img_responsive {
+    max-width: 90%;
+    height: 60%;
+}
+}
+
+@media (max-width: 992px){
+	.img_responsive {
+		max-width: 90%;
+		height: auto;
+	}
+	}
+	.jumbotron img  {
+		padding: 2% 50px;
+	}
+
+	.jumbotron h3 {
+		color: #273849;
+		font-size: 24px;
+		font-family:"Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+	}
+	@media (max-width: 992px){
+		.jumbotron img {
+			display: block;
+			margin: 0 auto;
+			max-width: 50%;
+			height: auto;
+		}
+		}
+
+        @media (min-width: 992px){
+            .col-md-4 img {
+                max-width: 90%;
+                height: 60%;
+            }
+            }
+            
+            @media (max-width: 992px){
+                .col-md-4 img {
+                    max-width: 90%;
+                    height: auto;
+                }
+                }
+
+   .footer{
+         float: left;
+         width: 100%;
+         height: 100px;
+         color: #939393;
+         background-color: #050D22;
+         text-align: center;
+         line-height:100px;
+   }
+   .footer a{
+       color: #939393;
+   }

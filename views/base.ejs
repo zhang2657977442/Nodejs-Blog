@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Direction的博客</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+    <link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">OneDirection</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a id="notice" href="/"><span class="sr-only">(current)</span></a></li>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">分类<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/article/classfiyPage?classify=基础三大件">基础三大件</a></li>
+                            <li><a href="/article/classfiyPage?classify=VueJS">VueJS</a></li>
+                            <li><a href="/article/classfiyPage?classify=NodeJS">NodeJS</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/article/classfiyPage?classify=服务端">服务端</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/article/classfiyPage?classify=其他">其他</a></li>
+                        </ul>
+                    </li>
+					<li><a href="https://www.frontendjs.com" target="_blank">技术文档</a></li>
+                    <li><a href="#">开源项目</a></li>
+                    <li><a href="javascript:alert('QQ:2657977449');">联系</a></li>
+
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="row">
+        <div class="getAllArticle">
+
+        </div>
+        <div class="col-sm-12">
+            <nav>
+                <ul class="pagination">
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="footer">  
+        <strong>Copyright</strong> &copy; 2021 All rights reserved <img src="/img/beian.png" alt=""><a href="http://beian.miit.gov.cn/">京ICP备2021019448号</a>
+    
+    </div>
+</body>
+<script src="/js/jquery-3.5.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/underscore-noflect.js"></script>
+
+<script type="text/template" id="allArticle">
+    <div class="col-md-4"><a href="/article/showArticle?ID={{= ID }}"><img class="img_responsive" src="/img/title1.jpg"
+        alt=""><span>{{= topic }}</span></a>
+        <h6 class="post-footer">
+            {{= classify }} <!--| 评论：未开放--> | 浏览：{{= visitNum }} | 点赞：{{= thumbsUp }} 
+        </h6></div>
+</script>
+<script>
+    $(".navbar").fadeIn(900);
+
+    //获取文章
+    var getAllArticle = $('.getAllArticle');
+    //得到模板
+    var compiled = _.template($("#allArticle").html());
+    var classify = '<%=classify%>';
+    $("#notice").html(classify);
+    getPage(0);
+    //AJAX读取文章列表
+    function getPage(page) {
+        $.get("/article/getClassify?classify="+classify,function (result) {
+            for(var i = 0; i<result.allResult.length; i++){
+                var htmlstring = compiled(result.allResult[i]);
+                getAllArticle.append(htmlstring);
+            }
+        });
+    }
+
+</script>
+
+</html>
